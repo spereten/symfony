@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+    postgres:
+        image: postgres:15
+        environment:
+            POSTGRES_DB: 'twitter'
+            POSTGRES_USER: 'user'
+            POSTGRES_PASSWORD: 'password'
+            PGDATA: "/var/lib/postgresql/data/pgdata"
+        container_name: 'postgresql'
+        volumes:
+            - ./postgres:/var/lib/postgresql/data
+        ports:
+            - 5432:5432
+    nginx:
+        build: ./nginx
+        ports:
+            - "80:80"
+        volumes:
+            - ../symfony:/home/www/:delegated
+        container_name: nginx
+    adminer:
+        image: adminer
+        restart: always
+        ports:
+            - 8080:8080
+    php:
+        build:
+            context: ./php
+        volumes:
+            - ../symfony:/home/www/:delegated
+        container_name: php
+        depends_on:
+            - postgres
+networks:
+    app-network:
+        driver: bridge
