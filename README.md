@@ -7,6 +7,8 @@ php bin/console doctrine:fixtures:load
 https://profi-bel.by/backoffice/doc.php?d=vrf
 
 
-php bin/console doctrine:migrations:execute DoctrineMigrations\Version20230610090333 --down
+php bin/console doctrine:migrations:execute DoctrineMigrations\Version20230614123204 --down
+
+php bin/console dbal:run-sql "SELECT * FROM profile" 
 
 

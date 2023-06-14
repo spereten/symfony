@@ -10,7 +10,8 @@ class ServiceManagerDto
         public ?string $title = null,
     ){}
 
-    public static function fromArray($attribute){
+    public static function fromArray($attribute): ServiceManagerDto
+    {
         return new self(...$attribute);
     }
 }

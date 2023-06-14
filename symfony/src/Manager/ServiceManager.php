@@ -3,7 +3,7 @@
 namespace App\Manager;
 
 use App\DTO\ServiceManagerDto;
-use App\Entity\ServiceEntity;
+use App\Entity\Service;
 use App\Repository\ServiceRepository;
 
 class ServiceManager
@@ -12,9 +12,9 @@ class ServiceManager
     {
     }
 
-    public function saveService(ServiceManagerDto $dto, bool $flush = true): ServiceEntity
+    public function saveService(ServiceManagerDto $dto, bool $flush = true): Service
     {
-        $serviceEntity = new ServiceEntity();
+        $serviceEntity = new Service();
         $serviceEntity->setTitle($dto->title);
         $serviceEntity->setCreatedAt();
         $serviceEntity->setUpdatedAt();
@@ -22,5 +22,11 @@ class ServiceManager
         $this->serviceRepository->save($serviceEntity, $flush);
 
         return $serviceEntity;
+    }
+
+    public function attachParentServices(Service $parent, Service $service): Service
+    {
+        $service->setParent($parent);
+        return $service;
     }
 }

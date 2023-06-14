@@ -4,6 +4,7 @@ namespace DataFixtures;
 use App\DTO\ProfileManagerDto;
 use App\Manager\ProfileManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 
 class ProfileFixtures extends Fixture
@@ -11,6 +12,7 @@ class ProfileFixtures extends Fixture
 
     public function __construct(
         private readonly ProfileManager $profileManager,
+        private readonly EntityManagerInterface $entityManager,
     ){}
 
     public function load(ObjectManager $manager): void

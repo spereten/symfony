@@ -2,30 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\ProfileEntity;
-use App\Repository\Contract\ProfileRepositoryInterface;
+use App\Entity\Profile;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @implements ProfileRepositoryInterface
+ * @extends ServiceEntityRepository<Profile>
  *
- * @extends ServiceRepository<ProfileEntity>
- *
- * @method ProfileEntity|null find($id, $lockMode = null, $lockVersion = null)
- * @method ProfileEntity|null findOneBy(array $criteria, array $orderBy = null)
- * @method ProfileEntity[]    findAll()
- * @method ProfileEntity[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
-
+ * @method Profile|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Profile|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Profile[]    findAll()
+ * @method Profile[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class ProfileRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, ProfileEntity::class);
+        parent::__construct($registry, Profile::class);
     }
 
-    public function save(ProfileEntity $entity, bool $flush = false): void
+    public function save(Profile $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -34,7 +30,7 @@ class ProfileRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(ProfileEntity $entity, bool $flush = false): void
+    public function remove(Profile $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -42,8 +38,6 @@ class ProfileRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
-
 
 //    /**
 //     * @return Profile[] Returns an array of Profile objects

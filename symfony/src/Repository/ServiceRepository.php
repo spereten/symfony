@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\ServiceEntity;
+use App\Entity\Service;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceRepository<ServiceEntity>
+ * @extends ServiceEntityRepository<Service>
  *
- * @method ServiceEntity|null find($id, $lockMode = null, $lockVersion = null)
- * @method ServiceEntity|null findOneBy(array $criteria, array $orderBy = null)
- * @method ServiceEntity[]    findAll()
- * @method ServiceEntity[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Service|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Service|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Service[]    findAll()
+ * @method Service[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class ServiceRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, ServiceEntity::class);
+        parent::__construct($registry, Service::class);
     }
 
-    public function save(ServiceEntity $entity, bool $flush = false): void
+    public function save(Service $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class ServiceRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(ServiceEntity $entity, bool $flush = false): void
+    public function remove(Service $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class ServiceRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return ServiceEntity[] Returns an array of ServiceEntity objects
+//     * @return Service[] Returns an array of Service objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class ServiceRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?ServiceEntity
+//    public function findOneBySomeField($value): ?Service
 //    {
 //        return $this->createQueryBuilder('s')
 //            ->andWhere('s.exampleField = :val')

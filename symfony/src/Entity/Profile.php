@@ -7,9 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: ProfileRepository::class)]
-#[ORM\Table(name: '`profile`')]
-
-class ProfileEntity
+class Profile
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -20,28 +18,28 @@ class ProfileEntity
     #[Gedmo\Slug(fields: ['first_name', 'last_name', 'surname'])]
     private ?string $slug = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255)]
     private ?string $first_name = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255)]
     private ?string $last_name = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255)]
     private ?string $surname = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255)]
     private ?string $email = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $phone = null;
+    #[ORM\Column(length: 255)]
+    private ?string $phone = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $experience = null;
+    #[ORM\Column(length: 255)]
+    private ?string $experience = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column]
     private ?\DateTimeImmutable $updated_at = null;
 
     public function getId(): ?int
@@ -66,7 +64,7 @@ class ProfileEntity
         return $this->first_name;
     }
 
-    public function setFirstName(?string $first_name): static
+    public function setFirstName(string $first_name): static
     {
         $this->first_name = $first_name;
 
@@ -78,7 +76,7 @@ class ProfileEntity
         return $this->last_name;
     }
 
-    public function setLastName(?string $last_name): static
+    public function setLastName(string $last_name): static
     {
         $this->last_name = $last_name;
 
@@ -90,7 +88,7 @@ class ProfileEntity
         return $this->surname;
     }
 
-    public function setSurname(?string $surname): static
+    public function setSurname(string $surname): static
     {
         $this->surname = $surname;
 
@@ -102,31 +100,31 @@ class ProfileEntity
         return $this->email;
     }
 
-    public function setEmail(?string $email): static
+    public function setEmail(string $email): static
     {
         $this->email = $email;
 
         return $this;
     }
 
-    public function getPhone(): ?int
+    public function getPhone(): ?string
     {
         return $this->phone;
     }
 
-    public function setPhone(?int $phone): static
+    public function setPhone(string $phone): static
     {
         $this->phone = $phone;
 
         return $this;
     }
 
-    public function getExperience(): ?int
+    public function getExperience(): ?string
     {
         return $this->experience;
     }
 
-    public function setExperience(?int $experience): static
+    public function setExperience(string $experience): static
     {
         $this->experience = $experience;
 
@@ -138,7 +136,7 @@ class ProfileEntity
         return $this->created_at;
     }
 
-    public function setCreatedAt(?\DateTimeImmutable $created_at = null): static
+    public function setCreatedAt(\DateTimeImmutable $created_at = null): static
     {
         $this->created_at = $created_at ?? new \DateTimeImmutable();
 
@@ -150,9 +148,9 @@ class ProfileEntity
         return $this->updated_at;
     }
 
-    public function setUpdatedAt(?\DateTimeImmutable $updated_at = null): static
+    public function setUpdatedAt(\DateTimeImmutable $updated_at = null): static
     {
-        $this->updated_at = $updated_at ?? new \DateTimeImmutable();
+        $this->updated_at = $updated_at ?? new \DateTimeImmutable();;
 
         return $this;
     }
