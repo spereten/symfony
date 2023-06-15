@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 
+use App\Repository\ServiceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -13,7 +14,7 @@ use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 
 #[Gedmo\Tree(type: 'nested')]
 #[ORM\Table(name: 'service')]
-#[ORM\Entity(repositoryClass: NestedTreeRepository::class)]
+#[ORM\Entity(repositoryClass: ServiceRepository::class)]
 class Service
 {
 
@@ -27,13 +28,22 @@ class Service
     private $title;
 
 
+    #[Gedmo\TreeLeft]
+    #[ORM\Column(name: 'lft', type: Types::INTEGER)]
+    private $lft;
 
+    #[Gedmo\TreeRight]
+    #[ORM\Column(name: 'rgt', type: Types::INTEGER)]
+    private $rgt;
+
+    #[Gedmo\TreeLevel]
+    #[ORM\Column(name: 'lvl', type: Types::INTEGER)]
+    private $lvl;
 
     #[Gedmo\TreeRoot]
     #[ORM\ManyToOne(targetEntity: Service::class)]
     #[ORM\JoinColumn(name: 'tree_root', referencedColumnName: 'id', onDelete: 'CASCADE')]
     private $root;
-
 
     #[Gedmo\TreeParent]
     #[ORM\ManyToOne(targetEntity: Service::class, inversedBy: 'children')]
@@ -41,14 +51,19 @@ class Service
     private $parent;
 
     #[ORM\OneToMany(targetEntity: Service::class, mappedBy: 'parent')]
-    #[ORM\OrderBy(['lft' => 'ASC'])]
     private $children;
 
-    #[ORM\OneToOne(mappedBy: 'service', cascade: ['persist', 'remove'])]
-    private ?ProfileService $profileService = null;
+    #[ORM\OneToMany(mappedBy: 'service', targetEntity: ProfileService::class)]
+    private Collection $profileServices;
+
+    public function __construct()
+    {
+        $this->profileServices = new ArrayCollection();
+    }
 
 
-    public function getId(): ?intпше
+
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -68,34 +83,90 @@ class Service
         return $this->root;
     }
 
-    public function setParent(self $parent = null): void
+    /**
+     * @return mixed
+     */
+    public function getLft()
     {
-        $this->parent = $parent;
+        return $this->lft;
     }
 
-    public function getParent(): ?self
+    public function setLft($lft)
+    {
+        $this->lft = $lft;
+        return $this;
+    }
+
+    public function getRgt()
+    {
+        return $this->rgt;
+    }
+
+    public function setRgt($rgt)
+    {
+        $this->rgt = $rgt;
+        return $this;
+    }
+
+    public function getLvl()
+    {
+        return $this->lvl;
+    }
+
+    public function setLvl($lvl)
+    {
+        $this->lvl = $lvl;
+        return $this;
+    }
+
+    public function getParent()
     {
         return $this->parent;
     }
 
-    public function getProfileService(): ?ProfileService
+    public function setParent($parent)
     {
-        return $this->profileService;
+        $this->parent = $parent;
+        return $this;
     }
 
-    public function setProfileService(?ProfileService $profileService): static
+    public function getChildren()
     {
-        // unset the owning side of the relation if necessary
-        if ($profileService === null && $this->profileService !== null) {
-            $this->profileService->setService(null);
-        }
+        return $this->children;
+    }
 
-        // set the owning side of the relation if necessary
-        if ($profileService !== null && $profileService->getService() !== $this) {
+    public function setChildren($children)
+    {
+        $this->children = $children;
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProfileService>
+     */
+    public function getProfileServices(): Collection
+    {
+        return $this->profileServices;
+    }
+
+    public function addProfileService(ProfileService $profileService): static
+    {
+        if (!$this->profileServices->contains($profileService)) {
+            $this->profileServices->add($profileService);
             $profileService->setService($this);
         }
 
-        $this->profileService = $profileService;
+        return $this;
+    }
+
+    public function removeProfileService(ProfileService $profileService): static
+    {
+        if ($this->profileServices->removeElement($profileService)) {
+            // set the owning side to null (unless already changed)
+            if ($profileService->getService() === $this) {
+                $profileService->setService(null);
+            }
+        }
 
         return $this;
     }

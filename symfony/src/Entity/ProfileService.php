@@ -18,11 +18,12 @@ class ProfileService
     #[ORM\Column(nullable: true)]
     private ?float $price = null;
 
-    #[ORM\OneToOne(inversedBy: 'profileService', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(inversedBy: 'profileServices')]
     private ?Profile $profile = null;
 
-    #[ORM\OneToOne(inversedBy: 'profileService', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(inversedBy: 'profileServices')]
     private ?Service $service = null;
+
 
     public function getId(): ?int
     {
@@ -64,4 +65,7 @@ class ProfileService
 
         return $this;
     }
+
+
+
 }

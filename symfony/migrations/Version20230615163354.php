@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20230615091456 extends AbstractMigration
+final class Version20230615163354 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -27,9 +27,9 @@ final class Version20230615091456 extends AbstractMigration
         $this->addSql('COMMENT ON COLUMN profile.created_at IS \'(DC2Type:datetime_immutable)\'');
         $this->addSql('COMMENT ON COLUMN profile.updated_at IS \'(DC2Type:datetime_immutable)\'');
         $this->addSql('CREATE TABLE profile_service (id INT NOT NULL, profile_id INT DEFAULT NULL, service_id INT DEFAULT NULL, price DOUBLE PRECISION DEFAULT NULL, PRIMARY KEY(id))');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_3223444ECCFA12B8 ON profile_service (profile_id)');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_3223444EED5CA9E6 ON profile_service (service_id)');
-        $this->addSql('CREATE TABLE service (id INT NOT NULL, tree_root INT DEFAULT NULL, parent_id INT DEFAULT NULL, title VARCHAR(64) NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE INDEX IDX_3223444ECCFA12B8 ON profile_service (profile_id)');
+        $this->addSql('CREATE INDEX IDX_3223444EED5CA9E6 ON profile_service (service_id)');
+        $this->addSql('CREATE TABLE service (id INT NOT NULL, tree_root INT DEFAULT NULL, parent_id INT DEFAULT NULL, title VARCHAR(64) NOT NULL, lft INT NOT NULL, rgt INT NOT NULL, lvl INT NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_E19D9AD2A977936C ON service (tree_root)');
         $this->addSql('CREATE INDEX IDX_E19D9AD2727ACA70 ON service (parent_id)');
         $this->addSql('ALTER TABLE profile_service ADD CONSTRAINT FK_3223444ECCFA12B8 FOREIGN KEY (profile_id) REFERENCES profile (id) NOT DEFERRABLE INITIALLY IMMEDIATE');

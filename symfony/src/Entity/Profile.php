@@ -44,8 +44,13 @@ class Profile
     #[ORM\Column]
     private ?\DateTimeImmutable $updated_at = null;
 
-    #[ORM\OneToOne(mappedBy: 'profile', cascade: ['persist', 'remove'])]
-    private ?ProfileService $profileService = null;
+    #[ORM\OneToMany(mappedBy: 'profile', targetEntity: ProfileService::class)]
+    private Collection $profileServices;
+
+    public function __construct()
+    {
+        $this->profileServices = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -161,24 +166,32 @@ class Profile
         return $this;
     }
 
-    public function getProfileService(): ?ProfileService
+    /**
+     * @return Collection<int, ProfileService>
+     */
+    public function getProfileServices(): Collection
     {
-        return $this->profileService;
+        return $this->profileServices;
     }
 
-    public function setProfileService(?ProfileService $profileService): static
+    public function addProfileService(ProfileService $profileService): static
     {
-        // unset the owning side of the relation if necessary
-        if ($profileService === null && $this->profileService !== null) {
-            $this->profileService->setProfile(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($profileService !== null && $profileService->getProfile() !== $this) {
+        if (!$this->profileServices->contains($profileService)) {
+            $this->profileServices->add($profileService);
             $profileService->setProfile($this);
         }
 
-        $this->profileService = $profileService;
+        return $this;
+    }
+
+    public function removeProfileService(ProfileService $profileService): static
+    {
+        if ($this->profileServices->removeElement($profileService)) {
+            // set the owning side to null (unless already changed)
+            if ($profileService->getProfile() === $this) {
+                $profileService->setProfile(null);
+            }
+        }
 
         return $this;
     }

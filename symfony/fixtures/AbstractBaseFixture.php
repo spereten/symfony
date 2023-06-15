@@ -21,18 +21,22 @@ abstract class AbstractBaseFixture extends Fixture
     }
 
     public function getRandomProfile(): Profile{
-
-        $criteria = Criteria::create()->orderBy(['id' => 'rand']);
-        $repository = $this->em->getRepository(Profile::class);
-        return $repository->matching($criteria)->first();
-
+        static $entities = null;
+        if($entities === null){
+            $entities = $this->em->getRepository(Profile::class)->findAll();
+        }
+        shuffle($entities);
+        return $entities[0];
     }
 
     public function getRandomService(): Service
     {
-        $criteria = Criteria::create()->orderBy(['id' => 'rand']);
-        $repository = $this->em->getRepository(Service::class);
-        return $repository->matching($criteria)->first();
+        static $entities = null;
+        if($entities === null){
+            $entities = $this->em->getRepository(Service::class)->findAll();
+        }
+        shuffle($entities);
+        return $entities[0];
     }
 
 }
