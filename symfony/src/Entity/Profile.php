@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProfileRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -41,6 +43,10 @@ class Profile
 
     #[ORM\Column]
     private ?\DateTimeImmutable $updated_at = null;
+
+    #[ORM\OneToOne(mappedBy: 'profile', cascade: ['persist', 'remove'])]
+    private ?ProfileService $profileService = null;
+
 
     public function getId(): ?int
     {
@@ -151,6 +157,28 @@ class Profile
     public function setUpdatedAt(\DateTimeImmutable $updated_at = null): static
     {
         $this->updated_at = $updated_at ?? new \DateTimeImmutable();;
+
+        return $this;
+    }
+
+    public function getProfileService(): ?ProfileService
+    {
+        return $this->profileService;
+    }
+
+    public function setProfileService(?ProfileService $profileService): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($profileService === null && $this->profileService !== null) {
+            $this->profileService->setProfile(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($profileService !== null && $profileService->getProfile() !== $this) {
+            $profileService->setProfile($this);
+        }
+
+        $this->profileService = $profileService;
 
         return $this;
     }

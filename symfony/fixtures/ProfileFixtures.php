@@ -12,7 +12,6 @@ class ProfileFixtures extends Fixture
 
     public function __construct(
         private readonly ProfileManager $profileManager,
-        private readonly EntityManagerInterface $entityManager,
     ){}
 
     public function load(ObjectManager $manager): void

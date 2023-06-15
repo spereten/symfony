@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -26,20 +27,6 @@ class Service
     private $title;
 
 
-    #[Gedmo\TreeLeft]
-    #[ORM\Column(name: 'lft', type: Types::INTEGER, nullable: true)]
-    private ?int $lft = null;
-
-
-
-    #[Gedmo\TreeLevel]
-    #[ORM\Column(name: 'lvl', type: Types::INTEGER, nullable: true)]
-    private ?int $lvl = null;
-
-
-    #[Gedmo\TreeRight]
-    #[ORM\Column(name: 'rgt', type: Types::INTEGER, nullable: true)]
-    private ?int $rgt = null;
 
 
     #[Gedmo\TreeRoot]
@@ -57,7 +44,11 @@ class Service
     #[ORM\OrderBy(['lft' => 'ASC'])]
     private $children;
 
-    public function getId(): ?int
+    #[ORM\OneToOne(mappedBy: 'service', cascade: ['persist', 'remove'])]
+    private ?ProfileService $profileService = null;
+
+
+    public function getId(): ?intпше
     {
         return $this->id;
     }
@@ -85,5 +76,27 @@ class Service
     public function getParent(): ?self
     {
         return $this->parent;
+    }
+
+    public function getProfileService(): ?ProfileService
+    {
+        return $this->profileService;
+    }
+
+    public function setProfileService(?ProfileService $profileService): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($profileService === null && $this->profileService !== null) {
+            $this->profileService->setService(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($profileService !== null && $profileService->getService() !== $this) {
+            $profileService->setService($this);
+        }
+
+        $this->profileService = $profileService;
+
+        return $this;
     }
 }
