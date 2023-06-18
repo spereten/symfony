@@ -7,10 +7,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Entity(repositoryClass: ProfileRepository::class)]
+#[ORM\Index(columns: ['slug'], name: 'profile__slug__inx')]
 class Profile
 {
+    use TimestampableEntity;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -18,6 +21,7 @@ class Profile
 
     #[ORM\Column(length: 255)]
     #[Gedmo\Slug(fields: ['first_name', 'last_name', 'surname'])]
+
     private ?string $slug = null;
 
     #[ORM\Column(length: 255)]
@@ -38,12 +42,6 @@ class Profile
     #[ORM\Column(length: 255)]
     private ?string $experience = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
-
-    #[ORM\Column]
-    private ?\DateTimeImmutable $updated_at = null;
-
     #[ORM\OneToMany(mappedBy: 'profile', targetEntity: ProfileService::class)]
     private Collection $profileServices;
 
@@ -51,7 +49,6 @@ class Profile
     {
         $this->profileServices = new ArrayCollection();
     }
-
 
     public function getId(): ?int
     {
@@ -138,30 +135,6 @@ class Profile
     public function setExperience(string $experience): static
     {
         $this->experience = $experience;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->created_at;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $created_at = null): static
-    {
-        $this->created_at = $created_at ?? new \DateTimeImmutable();
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeImmutable
-    {
-        return $this->updated_at;
-    }
-
-    public function setUpdatedAt(\DateTimeImmutable $updated_at = null): static
-    {
-        $this->updated_at = $updated_at ?? new \DateTimeImmutable();;
 
         return $this;
     }

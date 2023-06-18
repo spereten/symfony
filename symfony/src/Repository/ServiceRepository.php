@@ -21,6 +21,15 @@ class ServiceRepository extends ServiceEntityRepository
         parent::__construct($registry, Service::class);
     }
 
+    public function findBySlug(string $slug): ?Service
+    {
+        $builder = $this->getEntityManager()->createQueryBuilder();
+        $builder->select('u')->from($this->getEntityName(),'u')
+            ->where($builder->expr()->eq('u.slug', ':slug'))
+            ->setParameter('slug', $slug);
+        return  $builder->getQuery()->getOneOrNullResult();
+    }
+
     public function save(Service $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -39,28 +48,4 @@ class ServiceRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Service[] Returns an array of Service objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('s.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Service
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

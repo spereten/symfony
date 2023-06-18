@@ -2,13 +2,18 @@
 
 namespace App\Entity;
 
-use App\Repository\ProfileServiceRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\Timestampable;
 
-#[ORM\Entity(repositoryClass: ProfileServiceRepository::class)]
+#[ORM\Entity(repositoryClass: ServiceEntityRepository::class)]
 #[ORM\Table(name: 'profile_service')]
+#[ORM\Index(columns: ['profile_id'], name: 'profile_service__parent_id__inx')]
+#[ORM\Index(columns: ['service_id'], name: 'profile_service__service_id__inx')]
 class ProfileService
 {
+    use Timestampable;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

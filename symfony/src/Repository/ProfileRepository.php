@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Profile;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,6 +20,18 @@ class ProfileRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Profile::class);
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function findBySlug(string $slug): ?Profile
+    {
+        $builder = $this->getEntityManager()->createQueryBuilder();
+        $builder->select('u')->from($this->getEntityName(),'u')
+            ->where($builder->expr()->eq('u.slug', ':slug'))
+            ->setParameter('slug', $slug);
+        return  $builder->getQuery()->getOneOrNullResult();
     }
 
     public function save(Profile $entity, bool $flush = false): void
@@ -38,4 +51,5 @@ class ProfileRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
 }

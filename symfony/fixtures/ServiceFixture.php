@@ -20,41 +20,18 @@ class ServiceFixture extends Fixture
     {
         $services = json_decode(file_get_contents(__DIR__ . '/data/services.json'), true);
 
-        $food = new Service();
-        $food->setTitle('Food');
-
-        $fruits = new Service();
-        $fruits->setTitle('Fruits');
-        $fruits->setParent($food);
-
-        $vegetables = new Service();
-        $vegetables->setTitle('Vegetables');
-        $vegetables->setParent($food);
-
-        $carrots = new Service();
-        $carrots->setTitle('Carrots');
-        $carrots->setParent($vegetables);
-
-        $manager->persist($food);
-        $manager->persist($fruits);
-        $manager->persist($vegetables);
-        $manager->persist($carrots);
-        $manager->flush();
-        $manager->flush();
-   /*     die();
-
-        foreach ($services as $service) {
-            $e1 = $this->serviceManager->saveService(ServiceManagerDto::fromArray(['title' => $service['name']]), false);
-            foreach ($service['children'] as $l1){
-                $e2 = $this->serviceManager->saveService(ServiceManagerDto::fromArray(['title' => $l1['name']]), false);
-                $e2->setParent($e1);
-                foreach ($l1['children'] as $l2){
-                    $p3 = $this->serviceManager->saveService(ServiceManagerDto::fromArray(['title' => $l2['name']]), false);
-                    $p3->setParent($e2);
+        $fx = function(array $services, Service $parent = null) use(&$fx){
+            foreach ($services as $service){
+                $dto = new ServiceManagerDto(name: $service['name'], parent: $parent?->getId());
+                $entity = $this->serviceManager->saveService($dto);
+                if(key_exists('children', $service)){
+                    $fx($service['children'], $entity);
                 }
             }
-        }*/
+        };
+        $fx->bindTo($this);
+        $fx($services);
 
-
+        $manager->flush();
     }
 }

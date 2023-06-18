@@ -5,28 +5,29 @@ namespace App\Manager;
 use App\DTO\ServiceManagerDto;
 use App\Entity\Service;
 use App\Repository\ServiceRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
 class ServiceManager
 {
-    public function __construct(private readonly ServiceRepository $serviceRepository)
+    public function __construct(private readonly EntityManagerInterface $em)
     {
     }
 
     public function saveService(ServiceManagerDto $dto, bool $flush = true): Service
     {
-        $serviceEntity = new Service();
-        $serviceEntity->setTitle($dto->title);
-        $serviceEntity->setCreatedAt();
-        $serviceEntity->setUpdatedAt();
+        $entity = new Service();
+        $entity->setTitle($dto->name);
+        if($dto->parent){
+            $entity->setParent($this->getRepository()->find($dto->parent));
+        }
 
-        $this->serviceRepository->save($serviceEntity, $flush);
-
-        return $serviceEntity;
+        $this->getRepository()->save($entity, $flush);
+        return $entity;
     }
 
-    public function attachParentServices(Service $parent, Service $service): Service
+    /** @return ServiceRepository */
+    private function getRepository(): \Doctrine\ORM\EntityRepository
     {
-        $service->setParent($parent);
-        return $service;
+        return $this->em->getRepository(Service::class);
     }
 }

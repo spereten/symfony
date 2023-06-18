@@ -4,7 +4,6 @@ namespace DataFixtures;
 use App\DTO\ProfileManagerDto;
 use App\Manager\ProfileManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 
 class ProfileFixtures extends Fixture

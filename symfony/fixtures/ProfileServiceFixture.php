@@ -4,6 +4,7 @@
 namespace DataFixtures;
 
 use App\Entity\ProfileService;
+use App\Entity\Service;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
@@ -12,6 +13,10 @@ class ProfileServiceFixture extends AbstractBaseFixture  implements DependentFix
 
     public function load(ObjectManager $manager): void
     {
+
+        $queryBuilder = $manager->createQueryBuilder();
+        $queryBuilder->select('u')
+            ->from(Service::class, 'u');
 
         for($i = 0; $i <= 1000; $i++){
             $profile = $this->getRandomProfile();
@@ -22,10 +27,8 @@ class ProfileServiceFixture extends AbstractBaseFixture  implements DependentFix
             $profileService->setProfile($profile);
             $profileService->setService($service);
             $this->em->persist($profileService);
-            $this->em->flush();
         }
-
-
+        $this->em->flush();
     }
 
     public function getDependencies(): array

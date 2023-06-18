@@ -6,9 +6,7 @@ namespace DataFixtures;
 use App\Entity\Profile;
 use App\Entity\Service;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ObjectManager;
 use Faker\Generator;
 
 abstract class AbstractBaseFixture extends Fixture
@@ -31,7 +29,8 @@ abstract class AbstractBaseFixture extends Fixture
 
     public function getRandomService(): Service
     {
-        static $entities = null;
+
+         $entities = null;
         if($entities === null){
             $entities = $this->em->getRepository(Service::class)->findAll();
         }

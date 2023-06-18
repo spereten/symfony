@@ -4,12 +4,13 @@ namespace App\Manager;
 
 use App\DTO\ProfileManagerDto;
 use App\Entity\Profile;
-use App\Entity\ProfileEntity;
 use App\Repository\ProfileRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 
 class ProfileManager
 {
-    public function __construct(private readonly ProfileRepository $profileRepository)
+    public function __construct(private readonly EntityManagerInterface $em)
     {
     }
 
@@ -22,12 +23,16 @@ class ProfileManager
         $profileEntity->setEmail($profileManagerDto->email);
         $profileEntity->setPhone($profileManagerDto->phone);
         $profileEntity->setExperience($profileManagerDto->experience);
-        $profileEntity->setCreatedAt();
-        $profileEntity->setUpdatedAt();
 
-        $this->profileRepository->save($profileEntity, $flush);
+        $this->getRepository()->save($profileEntity, $flush);
 
 
         return $profileEntity;
+    }
+
+    /** @return ProfileRepository */
+    private function getRepository(): EntityRepository
+    {
+        return $this->em->getRepository(Profile::class);
     }
 }
