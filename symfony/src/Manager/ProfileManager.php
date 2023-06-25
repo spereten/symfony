@@ -14,6 +14,10 @@ class ProfileManager
     {
     }
 
+    public function getProfilesForService(int $serviceId): array
+    {
+        return $this->getRepository()->getProfileForServiceWithPagination($serviceId);
+    }
     public function saveProfile(ProfileManagerDto $profileManagerDto, bool $flush = true): Profile
     {
         $profileEntity = new Profile();

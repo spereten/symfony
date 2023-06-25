@@ -1,0 +1,24 @@
+{% extends 'frontend/layout/base.html.twig' %}
+{% block content %}
+    <div class="services-list">
+        {% for serviceL1 in services %}
+            <div class="services-list-column">
+                    <div class="services-list-column__title">{{ serviceL1.name }}</div>
+                    {% if serviceL1.children %}
+                        <div class="services-list-column__lists">
+                            {% for service in serviceL1.children | slice(1, 10) %}
+                                <a class="services-list-column-item"
+                                   href="{{ path('services.detail', {parentSlug: serviceL1.slug, slug: service.slug}) }}">{{ service.name }}
+                                </a>
+                            {% endfor %}
+                            
+                            {% if serviceL1.children|length > 10 %}
+                                <a class="services-list-column__more-link" href="">Все услуги</a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

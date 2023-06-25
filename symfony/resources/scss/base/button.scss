@@ -1,0 +1,24 @@
+.button {
+  display: inline-block;
+  overflow: hidden;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 12px 45px 12px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.2s ease 0.01ms;
+
+  &:hover {
+    color: white;
+    text-decoration: none;
+  }
+
+  @include font(16px, 15px);
+
+  &.-primary {
+    background-color: var(--color-primary);
+  }
+}

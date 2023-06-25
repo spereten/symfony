@@ -3,12 +3,11 @@
 
 namespace DataFixtures;
 
-use App\Entity\ProfileService;
 use App\Entity\Service;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class ProfileServiceFixture extends AbstractBaseFixture  implements DependentFixtureInterface
+class ProfileServiceFixture extends AbstractBaseFixture implements DependentFixtureInterface
 {
 
     public function load(ObjectManager $manager): void
@@ -22,11 +21,8 @@ class ProfileServiceFixture extends AbstractBaseFixture  implements DependentFix
             $profile = $this->getRandomProfile();
             $service = $this->getRandomService();
 
-            $profileService = new ProfileService();
-            $profileService->setPrice($this->faker->numberBetween(100, 500));
-            $profileService->setProfile($profile);
-            $profileService->setService($service);
-            $this->em->persist($profileService);
+            $service->addProfile($profile);
+            $this->em->persist($service);
         }
         $this->em->flush();
     }

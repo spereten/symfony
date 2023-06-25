@@ -11,6 +11,15 @@ php bin/console doctrine:migrations:execute DoctrineMigrations\Version2023061412
 
 php bin/console dbal:run-sql "SELECT * FROM profile" 
 
+profile
+id, name
+service
+id, name
+service_profile
+id, service_id, profile_id
+service_price
+id, service_id, price
+
 
 Есть несколько вопросов:
 1. Оцените пожалуйста код который отправил ниже, мне необходимо добавить связь в Service, для это передаю id и получаю сущность. В этой ситуации появился вопрос лишних запросов, получается на нужно обязательно делать их, когда в том же ActiveRecord можно добавлять прямо id. Возможно есть другие решения более оптимальные.

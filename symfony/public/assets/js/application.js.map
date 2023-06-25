@@ -1,0 +1,1 @@
+{"version":3,"file":"application.js","sources":["../../../resources/application.js"],"sourcesContent":["import './scss/styles.scss'\n\ndocument.addEventListener('DOMContentLoaded', () => {\n    console.log('sd');\n})"],"names":[],"mappings":";AAEA,SAAS,iBAAiB,oBAAoB,MAAM;AAChD,UAAQ,IAAI,IAAI;AACpB,CAAC;"}

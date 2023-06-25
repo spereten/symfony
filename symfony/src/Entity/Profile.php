@@ -42,12 +42,12 @@ class Profile
     #[ORM\Column(length: 255)]
     private ?string $experience = null;
 
-    #[ORM\OneToMany(mappedBy: 'profile', targetEntity: ProfileService::class)]
-    private Collection $profileServices;
+    #[ORM\ManyToMany(targetEntity: Service::class, mappedBy: 'profile')]
+    private Collection $services;
 
     public function __construct()
     {
-        $this->profileServices = new ArrayCollection();
+        $this->services = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -140,30 +140,27 @@ class Profile
     }
 
     /**
-     * @return Collection<int, ProfileService>
+     * @return Collection<int, Service>
      */
-    public function getProfileServices(): Collection
+    public function getServices(): Collection
     {
-        return $this->profileServices;
+        return $this->services;
     }
 
-    public function addProfileService(ProfileService $profileService): static
+    public function addService(Service $service): static
     {
-        if (!$this->profileServices->contains($profileService)) {
-            $this->profileServices->add($profileService);
-            $profileService->setProfile($this);
+        if (!$this->services->contains($service)) {
+            $this->services->add($service);
+            $service->addProfile($this);
         }
 
         return $this;
     }
 
-    public function removeProfileService(ProfileService $profileService): static
+    public function removeService(Service $service): static
     {
-        if ($this->profileServices->removeElement($profileService)) {
-            // set the owning side to null (unless already changed)
-            if ($profileService->getProfile() === $this) {
-                $profileService->setProfile(null);
-            }
+        if ($this->services->removeElement($service)) {
+            $service->removeProfile($this);
         }
 
         return $this;

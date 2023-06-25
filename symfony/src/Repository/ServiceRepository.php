@@ -4,8 +4,10 @@ namespace App\Repository;
 
 use App\Entity\Service;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
-
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\ClassMetadata;
+use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
+use \Gedmo\Tree\Hydrator\ORM\TreeObjectHydrator;
 /**
  * @extends ServiceEntityRepository<Service>
  *
@@ -14,18 +16,38 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Service[]    findAll()
  * @method Service[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ServiceRepository extends ServiceEntityRepository
+class ServiceRepository extends NestedTreeRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public const HYDRATE_TREE = 'tree';
+
+    public function __construct(EntityManagerInterface $em, ClassMetadata $class)
     {
-        parent::__construct($registry, Service::class);
+        parent::__construct($em, $class);
+        $em->getConfiguration()->addCustomHydrationMode(self::HYDRATE_TREE, TreeObjectHydrator::class);
+
+    }
+
+
+    public function getTreeServices(): array
+    {
+        $query = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('s')
+            ->from($this->getEntityName(), 's')
+            ->orderBy('s.root, s.left', 'ASC')
+            ->where('s.root = 1')
+
+            ->getQuery()->setHint(\Doctrine\ORM\Query::HINT_INCLUDE_META_COLUMNS, true);
+
+        return $query->getResult(self::HYDRATE_TREE);
+
     }
 
     public function findBySlug(string $slug): ?Service
     {
         $builder = $this->getEntityManager()->createQueryBuilder();
-        $builder->select('u')->from($this->getEntityName(),'u')
-            ->where($builder->expr()->eq('u.slug', ':slug'))
+        $builder->select('s')->from($this->getEntityName(),'s')
+            ->where($builder->expr()->eq('s.slug', ':slug'))
             ->setParameter('slug', $slug);
         return  $builder->getQuery()->getOneOrNullResult();
     }

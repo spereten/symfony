@@ -26,23 +26,29 @@ class Service
     #[ORM\Column(type: Types::INTEGER)]
     private ?int $id;
 
-    #[ORM\Column(name: 'title', type: Types::STRING, length: 64)]
-    private ?string $title;
+    #[ORM\Column(length: 255)]
+    #[Gedmo\Slug(fields: ['name'])]
+    private ?string $slug = null;
+
+    #[ORM\Column(name: 'name', type: Types::STRING, length: 64)]
+    private ?string $name;
 
     #[Gedmo\TreeParent]
     #[ORM\ManyToOne(targetEntity: Service::class, inversedBy: 'children')]
     #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     private ?self $parent;
 
-    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Service::class)]
+    #[ORM\OneToOne(mappedBy: 'parent', targetEntity: Service::class)]
     private $children;
 
-    #[ORM\OneToMany(mappedBy: 'service', targetEntity: ProfileService::class)]
-    private Collection $profileServices;
+    #[ORM\ManyToMany(targetEntity: Profile::class, inversedBy: 'services')]
+    private Collection $profile;
+
+
 
     public function __construct()
     {
-        $this->profileServices = new ArrayCollection();
+        $this->profile = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -50,14 +56,25 @@ class Service
         return $this->id;
     }
 
-    public function setTitle(?string $title): void
+    public function setName(?string $name): void
     {
-        $this->title = $title;
+        $this->name = $name;
     }
 
-    public function getTitle(): ?string
+    public function getName(): ?string
     {
-        return $this->title;
+        return $this->name;
+    }
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
+
+        return $this;
     }
 
     public function getRoot(): int
@@ -87,20 +104,36 @@ class Service
         return $this;
     }
 
-    /**
-     * @return Collection<int, ProfileService>
-     */
-    public function getProfileServices(): Collection
+    public function toArray(): array
     {
-        return $this->profileServices;
+        return [
+            'id' => $this->getId(),
+            'slug' => $this->getSlug(),
+            'name' => $this->getName(),
+        ];
     }
 
-    public function addProfileService(ProfileService $profileService): static
+    /**
+     * @return Collection<int, Profile>
+     */
+    public function getProfile(): Collection
     {
-        if (!$this->profileServices->contains($profileService)) {
-            $this->profileServices->add($profileService);
-            $profileService->setService($this);
+        return $this->profile;
+    }
+
+    public function addProfile(Profile $profile): static
+    {
+
+        if (!$this->profile->contains($profile)) {
+            $this->profile->add($profile);
         }
+
+        return $this;
+    }
+
+    public function removeProfile(Profile $profile): static
+    {
+        $this->profile->removeElement($profile);
 
         return $this;
     }
