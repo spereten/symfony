@@ -6,6 +6,7 @@ use App\Entity\ProfileService;
 use App\Manager\ProfileManager;
 use App\Manager\ServiceManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -22,15 +23,17 @@ class ServicesController extends AbstractController
 
     }
     #[Route('/{parentSlug}/{slug}', name: 'services.detail')]
-    public function detail(string $parentSlug, string $slug): Response
+    public function detail(string $parentSlug, string $slug, Request $request): Response
     {
         $service = $this->serviceManager->findBySlug($slug);
-        if($service){
+
+        if($service && $service->getParent()->getSlug() !== $parentSlug){
             //response code;
         }
+        $page = $request->query->get('page');
+        $profiles = $this->profileService->getProfilesForService($service->getId(), $page);
 
-        $r = $this->profileService->getProfilesForService($service->getId());
-        dd($r);
+        return $this->render('/frontend/pages/service.html.twig', ['profiles' => $profiles]);
 
 
     }

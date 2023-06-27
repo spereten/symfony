@@ -14,10 +14,16 @@ class ProfileManager
     {
     }
 
-    public function getProfilesForService(int $serviceId): array
+    public function getProfilesForService(int $serviceId, int $page): array
     {
-        return $this->getRepository()->getProfileForServiceWithPagination($serviceId);
+        return $this->getRepository()->getProfileForServiceWithPagination($serviceId, $page ?? 0, $perPage ?? 5);
     }
+
+    public function getProfileBySlug(string $slug): ?Profile
+    {
+        return $this->getRepository()->findOneBy(['slug' => $slug]);
+    }
+
     public function saveProfile(ProfileManagerDto $profileManagerDto, bool $flush = true): Profile
     {
         $profileEntity = new Profile();
@@ -32,6 +38,11 @@ class ProfileManager
 
 
         return $profileEntity;
+    }
+
+    public function getProfile(int $profileId): ?Profile
+    {
+        return $this->getRepository()->find($profileId);
     }
 
     /** @return ProfileRepository */

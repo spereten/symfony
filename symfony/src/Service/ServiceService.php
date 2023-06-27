@@ -16,6 +16,8 @@ class ServiceService
 
     public function addProfileToService(int $profileId, int $serviceId, ){
         $services = $this->serviceManager->getPathService($serviceId);
+        $profile = $this->profileManager->getProfile($profileId);
+
         foreach ($services as $service){
             $service->addProfile($profile);
         }

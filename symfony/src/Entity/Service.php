@@ -33,17 +33,18 @@ class Service
     #[ORM\Column(name: 'name', type: Types::STRING, length: 64)]
     private ?string $name;
 
+
     #[Gedmo\TreeParent]
     #[ORM\ManyToOne(targetEntity: Service::class, inversedBy: 'children')]
     #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     private ?self $parent;
 
-    #[ORM\OneToOne(mappedBy: 'parent', targetEntity: Service::class)]
+    #[ORM\OneToMany(targetEntity: Service::class, mappedBy: 'parent')]
+    #[ORM\OrderBy(['lft' => 'ASC'])]
     private $children;
 
     #[ORM\ManyToMany(targetEntity: Profile::class, inversedBy: 'services')]
     private Collection $profile;
-
 
 
     public function __construct()

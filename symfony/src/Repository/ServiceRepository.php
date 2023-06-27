@@ -7,7 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
-use \Gedmo\Tree\Hydrator\ORM\TreeObjectHydrator;
+use Gedmo\Tree\Hydrator\ORM\TreeObjectHydrator;
 /**
  * @extends ServiceEntityRepository<Service>
  *
@@ -28,18 +28,18 @@ class ServiceRepository extends NestedTreeRepository
     }
 
 
-    public function getTreeServices(): array
+    public function getTreeServices(int $maxLevel = 2): array
     {
         $query = $this->getEntityManager()
             ->createQueryBuilder()
             ->select('s')
             ->from($this->getEntityName(), 's')
             ->orderBy('s.root, s.left', 'ASC')
-            ->where('s.root = 1')
+            ->where('s.level <= :level')
+            ->setParameter('level', $maxLevel)
+        ;
 
-            ->getQuery()->setHint(\Doctrine\ORM\Query::HINT_INCLUDE_META_COLUMNS, true);
-
-        return $query->getResult(self::HYDRATE_TREE);
+        return $query->getQuery()->setHint(\Doctrine\ORM\Query::HINT_INCLUDE_META_COLUMNS, true)->getResult(self::HYDRATE_TREE);
 
     }
 

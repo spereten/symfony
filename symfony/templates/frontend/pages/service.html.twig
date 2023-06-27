@@ -1,0 +1,8 @@
+{% extends 'frontend/layout/base.html.twig' %}
+{% block content %}
+    <div class="profiles-list">
+        {% for profile in profiles %}
+                <a href="{{ path('profile.detail', {slug: profile.slug}) }}">{{ profile.id }} -- {{ profile.firstName }} {{ profile.surname }}</a> <br>
+        {% endfor %}
+    </div>
+{% endblock %}

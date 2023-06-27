@@ -4,11 +4,16 @@
 namespace DataFixtures;
 
 use App\Entity\Service;
+use App\Service\ServiceService;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 
 class ProfileServiceFixture extends AbstractBaseFixture implements DependentFixtureInterface
 {
+    public function __construct(public readonly EntityManagerInterface $em, private readonly ServiceService $serviceService)
+    {
+    }
 
     public function load(ObjectManager $manager): void
     {
@@ -20,8 +25,7 @@ class ProfileServiceFixture extends AbstractBaseFixture implements DependentFixt
         for($i = 0; $i <= 1000; $i++){
             $profile = $this->getRandomProfile();
             $service = $this->getRandomService();
-
-            $service->addProfile($profile);
+            $this->serviceService->addProfileToService($profile->getId(), $service->getId());
             $this->em->persist($service);
         }
         $this->em->flush();
@@ -34,4 +38,6 @@ class ProfileServiceFixture extends AbstractBaseFixture implements DependentFixt
             ServiceFixture::class
         ];
     }
+
+
 }
