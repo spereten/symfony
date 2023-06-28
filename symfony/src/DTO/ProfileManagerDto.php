@@ -13,6 +13,6 @@ class ProfileManagerDto
         public ?string $surname = null,
         public ?string $email = null,
         public ?int $phone = null,
-        public ?int $experience = null,
+        public ?string $experience = null,
     ){}
 }

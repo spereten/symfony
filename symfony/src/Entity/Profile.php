@@ -21,26 +21,25 @@ class Profile
 
     #[ORM\Column(length: 255)]
     #[Gedmo\Slug(fields: ['first_name', 'last_name', 'surname'])]
-
-    private ?string $slug = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $first_name = null;
+    private string $slug;
 
     #[ORM\Column(length: 255)]
-    private ?string $last_name = null;
+    private string $first_name;
+
+    #[ORM\Column(length: 255)]
+    private string $last_name;
 
     #[ORM\Column(length: 255)]
     private ?string $surname = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $email = null;
+    private string $email;
 
     #[ORM\Column(length: 255)]
-    private ?string $phone = null;
+    private string $phone;
 
     #[ORM\Column(length: 255)]
-    private ?string $experience = null;
+    private string $experience;
 
     #[ORM\ManyToMany(targetEntity: Service::class, mappedBy: 'profile')]
     private Collection $services;
@@ -164,5 +163,18 @@ class Profile
         }
 
         return $this;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'slug' => $this->getSlug(),
+            'first_name' => $this->getFirstName(),
+            'last_name' => $this->getLastName(),
+            'surname' => $this->getSurname(),
+            'email' => $this->getEmail(),
+            'phone' => $this->getPhone(),
+            'experience' => $this->getExperience(),
+        ];
     }
 }

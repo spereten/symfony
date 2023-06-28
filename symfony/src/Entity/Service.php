@@ -28,10 +28,10 @@ class Service
 
     #[ORM\Column(length: 255)]
     #[Gedmo\Slug(fields: ['name'])]
-    private ?string $slug = null;
+    private string $slug;
 
     #[ORM\Column(name: 'name', type: Types::STRING, length: 64)]
-    private ?string $name;
+    private string $name;
 
 
     #[Gedmo\TreeParent]

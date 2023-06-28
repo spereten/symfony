@@ -16,13 +16,11 @@ class ProfilesController extends AbstractController
         private readonly ProfileManager $profileService,
     ){}
 
-
     #[Route('/profile/{slug}', name: 'profile.detail')]
-    public function detail(string $slug): Response
+    public function getProfile(string $slug): Response
     {
         $profile = $this->profileService->getProfileBySlug($slug);
 
         return $this->render('/frontend/pages/profile.html.twig', ['profile' => $profile]);
     }
-
 }

@@ -12,26 +12,27 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ServicesController extends AbstractController
 {
+    private const DEFAULT_PAGE = 0;
+    private const DEFAULT_PER_PAGE = 20;
+
     public function __construct(
         private readonly ServiceManager $serviceManager,
         private readonly ProfileManager $profileService,
     ){}
 
-    #[Route('/service', name: 'services.index')]
-    public function index(): Response
+
+    #[Route('/{parentSlug}/{slug?}', name: 'services.detail')]
+    public function getProfileForService(string $parentSlug, ?string $slug, Request $request): Response
     {
 
-    }
-    #[Route('/{parentSlug}/{slug}', name: 'services.detail')]
-    public function detail(string $parentSlug, string $slug, Request $request): Response
-    {
-        $service = $this->serviceManager->findBySlug($slug);
-
-        if($service && $service->getParent()->getSlug() !== $parentSlug){
-            //response code;
-        }
+        $service = $this->serviceManager->findBySlug($slug ?? $parentSlug);
         $page = $request->query->get('page');
-        $profiles = $this->profileService->getProfilesForService($service->getId(), $page);
+
+        if($service === null){
+            return new Response('', Response::HTTP_NOT_FOUND);
+        }
+
+        $profiles = $this->profileService->getProfilesForService($service->getId(), $page ?? self::DEFAULT_PAGE, self::DEFAULT_PER_PAGE);
 
         return $this->render('/frontend/pages/service.html.twig', ['profiles' => $profiles]);
 

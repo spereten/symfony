@@ -17,31 +17,18 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ProfileRepository extends ServiceEntityRepository
 {
-    private const PER_PAGE = 20;
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Profile::class);
     }
 
-    /**
-     * @throws NonUniqueResultException
-     */
-    public function findBySlug(string $slug): ?Profile
-    {
-        $builder = $this->getEntityManager()->createQueryBuilder();
-        $builder->select('u')->from($this->getEntityName(),'u')
-            ->where($builder->expr()->eq('u.slug', ':slug'))
-            ->setParameter('slug', $slug);
-        return  $builder->getQuery()->getOneOrNullResult();
-    }
-
     public function getProfileForServiceWithPagination(int $serviceId, int $page, int $perPage){
 
         $builder = $this->getEntityManager()->createQueryBuilder();
-        var_dump($serviceId);
+
         $builder->select('p')->from($this->getEntityName(),'p')
             ->orderBy('p.id', 'DESC')
-            ->leftJoin('p.services', 'services', 'WITH', 'services.id = :service_id')
+            ->join('p.services', 'services', 'WITH', 'services.id = :service_id')
             ->setParameter('service_id', $serviceId)
             ->setFirstResult($perPage * $page)
             ->setMaxResults($perPage);
