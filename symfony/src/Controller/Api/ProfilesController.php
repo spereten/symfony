@@ -4,6 +4,7 @@ namespace App\Controller\Api;
 
 use App\DTO\ProfileManagerDto;
 use App\Manager\ProfileManager;
+use App\Service\ServiceService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,6 +15,7 @@ class ProfilesController extends AbstractController
 {
     public function __construct(
         private readonly ProfileManager $profileService,
+        private readonly ServiceService $serviceService,
     ){}
 
     #[Route('/api/profile/{slug}', name: 'api.profile.by_slug', methods: 'GET')]
@@ -84,10 +86,30 @@ class ProfilesController extends AbstractController
         if($profile === null){
             return new JsonResponse(['errors' => ['status' => Response::HTTP_NOT_FOUND, 'title' => 'Профиль пользователя не найден' ]], Response::HTTP_NOT_FOUND);
         }
-
         $result = $this->profileService->deleteProfile($profile->getId());
         return new JsonResponse(['data' => $result]);
 
     }
+
+    #[Route('/api/test/{slug}', name: 'api.profile.attach_services', methods: 'GET')]
+    public function attachServiceForProfile(string $slug, Request $request): JsonResponse
+    {
+        $profile = $this->profileService->getProfileBySlug($slug);
+        if($profile === null){
+            return new JsonResponse(['errors' => ['status' => Response::HTTP_NOT_FOUND, 'title' => 'Профиль пользователя не найден' ]], Response::HTTP_NOT_FOUND);
+        }
+
+        $servicesIds = $request->request->get('services');
+        $servicesIds = [1,2,3,4,5];
+        if(!empty($servicesIds)){
+           $r =  $this->serviceService->attachServicesToProfile($profile->getId(), $servicesIds);
+        }
+
+        return new JsonResponse(['data' => []]);
+    }
+
+
+
+
 
 }

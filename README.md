@@ -48,3 +48,5 @@ id, service_id, price
 
 3. Для моего проекта необходима админ панель, подскажите какие варианты для решения этой задачи. В документации есть `https://github.com/EasyCorp/EasyAdminBundle`
 возможно есть другие варианты. 
+1. Вопросы про проверку 404 ошибки
+2. $profile = $this->profileService->getProfileBySlug($slug); вынести в тайпинг

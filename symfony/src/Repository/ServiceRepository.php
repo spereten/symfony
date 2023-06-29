@@ -43,6 +43,7 @@ class ServiceRepository extends NestedTreeRepository
 
     }
 
+    /** @deprecated use service manager */
     public function findBySlug(string $slug): ?Service
     {
         $builder = $this->getEntityManager()->createQueryBuilder();

@@ -3,6 +3,7 @@
 namespace App\Manager;
 
 use App\DTO\ServiceManagerDto;
+use App\Entity\Profile;
 use App\Entity\Service;
 use App\Repository\ServiceRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,16 +20,10 @@ class ServiceManager
         return $this->getRepository()->findBySlug($slug);
     }
 
-    public function saveService(ServiceManagerDto $dto, bool $flush = true): Service
+    /** @return Service[] */
+    public function findByCriteria(array $criteria, array $orderBy = null, $limit = null, $offset = null): array
     {
-        $entity = new Service();
-        $entity->setName($dto->name);
-        if($dto->parent){
-            $entity->setParent($this->getRepository()->find($dto->parent));
-        }
-
-        $this->getRepository()->save($entity, $flush);
-        return $entity;
+        return $this->getRepository()->findBy($criteria, $orderBy = null, $limit = null, $offset = null);
     }
 
     /** @return Service[] */
@@ -62,6 +57,25 @@ class ServiceManager
         };
 
         return $builder($tree);
+    }
+
+    public function saveService(ServiceManagerDto $dto, bool $flush = true): Service
+    {
+        $entity = new Service();
+        $entity->setName($dto->name);
+        if($dto->parent){
+            $entity->setParent($this->getRepository()->find($dto->parent));
+        }
+
+        $this->getRepository()->save($entity, $flush);
+        return $entity;
+    }
+
+    public function addProfile(Service $service, Profile $profile): void
+    {
+        $service->addProfile($profile);
+        $this->em->persist($service);
+        $this->em->flush();
     }
 
     /** @return ServiceRepository */
