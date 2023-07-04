@@ -6,14 +6,13 @@ use App\DTO\ProfileManagerDto;
 use App\Entity\Profile;
 use App\Manager\ProfileManager;
 use App\Service\ProfileService;
-use App\Service\ServiceService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/api/profile', requirements: ['_locale' => 'en|es|fr'], name: 'api.profile.')]
+#[Route('/api/profile', name: 'api.profile.')]
 class ProfilesController extends AbstractController
 {
     public function __construct(
