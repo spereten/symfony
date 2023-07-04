@@ -27,7 +27,6 @@ class ServiceRepository extends NestedTreeRepository
 
     }
 
-
     public function getTreeServices(int $maxLevel = 2): array
     {
         $query = $this->getEntityManager()
@@ -41,16 +40,6 @@ class ServiceRepository extends NestedTreeRepository
 
         return $query->getQuery()->setHint(\Doctrine\ORM\Query::HINT_INCLUDE_META_COLUMNS, true)->getResult(self::HYDRATE_TREE);
 
-    }
-
-    /** @deprecated use service manager */
-    public function findBySlug(string $slug): ?Service
-    {
-        $builder = $this->getEntityManager()->createQueryBuilder();
-        $builder->select('s')->from($this->getEntityName(),'s')
-            ->where($builder->expr()->eq('s.slug', ':slug'))
-            ->setParameter('slug', $slug);
-        return  $builder->getQuery()->getOneOrNullResult();
     }
 
     public function save(Service $entity, bool $flush = false): void

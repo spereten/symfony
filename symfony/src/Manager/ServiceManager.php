@@ -15,9 +15,9 @@ class ServiceManager
 
     }
 
-    public function findBySlug(string $slug)
+    public function findBySlug(string $slug): ?Service
     {
-        return $this->getRepository()->findBySlug($slug);
+        return $this->getRepository()->findOneBy(['slug' => $slug]);
     }
 
     /** @return Service[] */

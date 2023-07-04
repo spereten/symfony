@@ -4,6 +4,7 @@ namespace App\Manager;
 
 use App\DTO\ProfileManagerDto;
 use App\Entity\Profile;
+use App\Entity\Service;
 use App\Repository\ProfileRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
@@ -19,11 +20,6 @@ class ProfileManager
     }
 
     public function getProfileById(int $profileId): ?Profile
-    {
-        return $this->getRepository()->find($profileId);
-    }
-    /** @deprecated use method getProfileById */
-    public function getProfile(int $profileId): ?Profile
     {
         return $this->getRepository()->find($profileId);
     }
@@ -63,6 +59,21 @@ class ProfileManager
         return true;
     }
 
+    public function addServiceToProfile(Profile $profile, Service $service): void
+    {
+        $profile->addService($service);
+        $this->em->persist($profile);
+        $this->em->flush();
+
+    }
+
+    public function removeServiceFromProfile(Profile $profile, Service $service): void
+    {
+        $profile->removeService($service);
+        $this->em->persist($profile);
+        $this->em->flush();
+    }
+
     private static function fillEntityFromDto(Profile $profile, ProfileManagerDto $dto): Profile
     {
         $profile->setLastName($dto->last_name);
@@ -80,6 +91,8 @@ class ProfileManager
     {
         return $this->em->getRepository(Profile::class);
     }
+
+
 
 
 }
