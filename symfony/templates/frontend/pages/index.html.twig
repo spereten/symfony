@@ -1,24 +1,85 @@
 {% extends 'frontend/layout/base.html.twig' %}
+
 {% block content %}
-    <div class="services-list">
-        {% for serviceL1 in services %}
-            <div class="services-list-column">
-                    <div class="services-list-column__title">{{ serviceL1.name }}</div>
-                    {% if serviceL1.children %}
-                        <div class="services-list-column__lists">
-                            {% for service in serviceL1.children | slice(1, 10) %}
-                                <a class="services-list-column-item"
-                                   href="{{ path('services.detail', {parentSlug: serviceL1.slug, slug: service.slug}) }}">{{ service.name }}
-                                </a>
-                            {% endfor %}
-                            
-                            {% if serviceL1.children|length > 10 %}
-                                <a class="services-list-column__more-link" href="">Все услуги</a>
+    <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2" class="active" aria-current="true"></button>
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item">
+                <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"></rect></svg>
+
+                <div class="container">
+                    <div class="carousel-caption text-start">
+                        <h1>Example headline.</h1>
+                        <p>Some representative placeholder content for the first slide of the carousel.</p>
+                        <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item active">
+                <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"></rect></svg>
+
+                <div class="container">
+                    <div class="carousel-caption">
+                        <h1>Another example headline.</h1>
+                        <p>Some representative placeholder content for the second slide of the carousel.</p>
+                        <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"></rect></svg>
+
+                <div class="container">
+                    <div class="carousel-caption text-end">
+                        <h1>One more for good measure.</h1>
+                        <p>Some representative placeholder content for the third slide of this carousel.</p>
+                        <p><a class="btn btn-lg btn-primary" href="#">Browse gallery</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <div class="container marketing">
+        <div class="row">
+                {% for serviceL1 in services %}
+                    <div class="col-lg-4 text-start" >
+                        <div class="text-start">
+                            <h2>{{ serviceL1.name }}</h2>
+                            {% if serviceL1.children %}
+                                {% for service in serviceL1.children | slice(1, 10) %}
+                                    {% if location %}
+                                        <a class="services-list-column-item"
+                                           href="{{ path('service.location.profiles', {location: location.slug, slug: service.slug}) }}">
+                                            {{ service.name }}
+                                        </a><br>
+                                    {% else %}
+                                        <a class="services-list-column-item"
+                                           href="{{ path('service.profiles', {slug: service.slug}) }}">
+                                            {{ service.name }}
+                                        </a><br>
+                                    {% endif %}
+                                {% endfor %}
+
+                                {% if serviceL1.children|length > 10 %}
+                                    <br><p><a class="btn btn-secondary" href="">Все услуги »</a></p>
+                                {% endif %}
                             {% endif %}
                         </div>
-                    {% endif %}
-
-            </div>
-        {% endfor %}
+                    </div>
+                {% endfor %}
+        </div>
+        <hr class="featurette-divider">
     </div>
 {% endblock %}

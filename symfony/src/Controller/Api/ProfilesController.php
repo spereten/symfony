@@ -20,15 +20,6 @@ class ProfilesController extends AbstractController
         private readonly ProfileService $profileService,
     ){}
 
-    #[Route('/{slug}', name: 'api.profile.by_slug', methods: 'GET')]
-    public function getProfileBySlug(?Profile $profile): JsonResponse
-    {
-        if($profile === null){
-            return new JsonResponse(['errors' => ['status' => Response::HTTP_NOT_FOUND, 'title' => 'Профиль пользователя не найден' ]], Response::HTTP_NOT_FOUND);
-        }
-        return new JsonResponse(['data' => $profile->toArray()], Response::HTTP_OK);
-    }
-
     #[Route('/', name: 'create', methods: 'POST')]
     public function createProfile(Request $request): JsonResponse
     {
@@ -52,6 +43,15 @@ class ProfilesController extends AbstractController
         return new JsonResponse(['data' => $profile->toArray()]);
     }
 
+    #[Route('/{slug}', name: 'api.profile.by_slug', methods: 'GET')]
+    public function getProfileBySlug(?Profile $profile): JsonResponse
+    {
+        if($profile === null){
+            return new JsonResponse(['errors' => ['status' => Response::HTTP_NOT_FOUND, 'title' => 'Профиль пользователя не найден' ]], Response::HTTP_NOT_FOUND);
+        }
+        return new JsonResponse(['data' => $profile->toArray()], Response::HTTP_OK);
+    }
+
     #[Route('/{slug}', name: 'update', methods: 'PATCH')]
     public function updateProfile(?Profile $profile, Request $request): JsonResponse
     {
@@ -70,7 +70,7 @@ class ProfilesController extends AbstractController
             $dto = new ProfileManagerDto(
                 first_name: $first_name, last_name: $last_name, surname: $surname, email : $email, phone: $phone, experience: $experience
             );
-            $profile = $this->profileManager->updateProfile($profile->getId(), $dto);
+            $profile = $this->profileManager->updateProfile($profile, $dto);
         }catch (\Throwable $exception){
             $errors[] =  ['status' => Response::HTTP_INTERNAL_SERVER_ERROR, 'title' => $exception->getMessage()];
             return new JsonResponse(['errors' => $errors], Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -90,7 +90,7 @@ class ProfilesController extends AbstractController
 
     }
 
-    #[Route('/{slug}/sync-services', name: 'sync-services', methods: 'PATCH')]
+    #[Route('/{slug}/sync-services', name: 'sync-services', methods: 'get')]
     public function syncServicesForProfile(?Profile $profile, Request $request): JsonResponse
     {
         if($profile === null){
@@ -98,14 +98,10 @@ class ProfilesController extends AbstractController
         }
 
         $services = (array)$request->request->get('services');
+        $services = (array)[1,2,3,4,5,6];
 
-        $result = $this->profileService->syncProfileWithServices($profile->getId(), $services);
+        $result = $this->profileService->syncProfileWithServices($profile, $services);
 
         return new JsonResponse(['data' => $result]);
     }
-
-
-
-
-
 }

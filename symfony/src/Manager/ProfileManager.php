@@ -14,6 +14,8 @@ class ProfileManager
     public function __construct(private readonly EntityManagerInterface $em)
     {
     }
+
+
     public function getProfileBySlug(string $slug): ?Profile
     {
         return $this->getRepository()->findOneBy(['slug' => $slug]);
@@ -24,9 +26,28 @@ class ProfileManager
         return $this->getRepository()->find($profileId);
     }
 
-    public function getProfilesForService(int $serviceId, int $page, int $perPage): array
+    public function getProfilesForService(array $criteria, int $page, int $perPage): array
     {
-        return $this->getRepository()->getProfileForServiceWithPagination($serviceId, $page, $perPage);
+        if(empty($criteria['service_id'])){
+            throw new \InvalidArgumentException('Bad parameter service_id');
+        }
+        return $this->getRepository()->getProfileForServiceWithPagination($criteria, $page, $perPage);
+    }
+
+    /**
+     * @var Service $newServices[]
+     * @var Service $removeServices[]
+     *
+     */
+    public function syncProfileWithServices(Profile $profile, array $servicesWhichNeedAdd, array $servicesWhichNeedDelete): bool
+    {
+
+        array_map(fn($service) => $profile->addService($service), $servicesWhichNeedAdd);
+        array_map(fn($service) => $profile->removeService($service), $servicesWhichNeedDelete);
+
+        $this->em->flush();
+
+        return true;
     }
 
     public function saveProfile(ProfileManagerDto $profileManagerDto, bool $flush = true): Profile
@@ -38,41 +59,14 @@ class ProfileManager
         return $profileEntity;
     }
 
-    public function updateProfile(int $profileId, ProfileManagerDto $profileManagerDto, bool $flush = true): Profile
+    public function updateProfile(Profile $profile, ProfileManagerDto $profileManagerDto, bool $flush = true): Profile
     {
-        $profileEntity = $this->getProfileBySlug($profileId);
-        $profileEntity = self::fillEntityFromDto($profileEntity, $profileManagerDto);
-
+        $profileEntity = self::fillEntityFromDto($profile, $profileManagerDto);
         $this->getRepository()->save($profileEntity, $flush);
 
         return $profileEntity;
     }
 
-    public function deleteProfile(int $profileId, bool $flush = true): bool
-    {
-        $profile = $this->getProfileById($profileId);
-        if($profile === null){
-            return false;
-        }
-        $this->getRepository()->remove($profile, $flush);
-
-        return true;
-    }
-
-    public function addServiceToProfile(Profile $profile, Service $service): void
-    {
-        $profile->addService($service);
-        $this->em->persist($profile);
-        $this->em->flush();
-
-    }
-
-    public function removeServiceFromProfile(Profile $profile, Service $service): void
-    {
-        $profile->removeService($service);
-        $this->em->persist($profile);
-        $this->em->flush();
-    }
 
     private static function fillEntityFromDto(Profile $profile, ProfileManagerDto $dto): Profile
     {
@@ -86,13 +80,22 @@ class ProfileManager
         return $profile;
     }
 
+    public function deleteProfile(int $profileId, bool $flush = true): bool
+    {
+        $profile = $this->getProfileById($profileId);
+        if($profile === null){
+            return false;
+        }
+        $this->getRepository()->remove($profile, $flush);
+
+        return true;
+    }
+
+
     /** @return ProfileRepository */
     private function getRepository(): EntityRepository
     {
         return $this->em->getRepository(Profile::class);
     }
-
-
-
 
 }

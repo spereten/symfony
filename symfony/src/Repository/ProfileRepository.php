@@ -22,14 +22,15 @@ class ProfileRepository extends ServiceEntityRepository
         parent::__construct($registry, Profile::class);
     }
 
-    public function getProfileForServiceWithPagination(int $serviceId, int $page, int $perPage){
+    public function getProfileForServiceWithPagination($criteria, int $page, int $perPage){
 
         $builder = $this->getEntityManager()->createQueryBuilder();
 
         $builder->select('p')->from($this->getEntityName(),'p')
             ->orderBy('p.id', 'DESC')
             ->join('p.services', 'services', 'WITH', 'services.id = :service_id')
-            ->setParameter('service_id', $serviceId)
+
+            ->setParameter('service_id', $criteria['service_id'])
             ->setFirstResult($perPage * $page)
             ->setMaxResults($perPage);
 

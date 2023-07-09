@@ -30,7 +30,6 @@ class ServiceManager
     public function getPathService(int $serviceId): array
     {
         return $this->getRepository()->getPath($this->getRepository()->find($serviceId));
-
     }
 
     public function getTreeAllService(): array

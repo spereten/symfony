@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Entity\Profile;
 use App\Entity\Service;
 use App\Manager\ProfileManager;
 use App\Manager\ServiceManager;
@@ -15,33 +16,23 @@ class ProfileService
         private readonly ProfileManager $profileManager
     ){}
 
-    public function syncProfileWithServices(int $profileId, array $services = []): bool
+    public function syncProfileWithServices(Profile $profile, array $services = []): bool
     {
-        $profile = $this->profileManager->getProfileById($profileId);
-        if($profile === null){
-            return false;
-        }
-        /** @var Service[]  $services*/
-        $currentServices = $profile->getServices();
-        /** @var Service[]  $services*/
-        $newServices = new ArrayCollection($this->serviceManager->findByCriteria(['id' => $services]));
 
-        $currentServices->map(function(Service $service) use($newServices, $profile) {
-            if(!$newServices->contains($service)){
-                $this->profileManager->removeServiceFromProfile($profile, $service);
-            }
-            return $service;
-        });
+        $servicesWhichExistId = array_map(function($service) {return $service->getId();}, $profile->getServices()->toArray());
 
-        $newServices->map( function(Service $service) use($currentServices, $profile) {
-            if(!$currentServices->contains($service)){
-                $this->profileManager->addServiceToProfile($profile, $service);
-            }
-            return $service;
-        });
+        // новые, которых не было;
+        $servicesWhichNeedAddId = array_diff($services, $servicesWhichExistId);
+        $servicesWhichNeedAdd = $this->serviceManager->findByCriteria(['id' => $servicesWhichNeedAddId]);
 
+        // старые, которых не стало;
+        $servicesWhichNeedDeleteId = array_diff($servicesWhichExistId, $services);
+        $servicesWhichNeedDelete = $this->serviceManager->findByCriteria(['id' => $servicesWhichNeedDeleteId]);
 
-        return true;
+        //старые, которые остались
+        //array_diff($services, $servicesWhichNeedDeleteId, $servicesWhichNeedAddId));
+
+        return $this->profileManager->syncProfileWithServices($profile, $servicesWhichNeedAdd, $servicesWhichNeedDelete);
 
     }
 }
