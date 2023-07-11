@@ -17,6 +17,9 @@ class CustomMatcher
 
     public function check(Request $request, $params, $context): bool
     {
+        if(empty($params['location'])){
+            return true;
+        }
         return $this->locationManager->hasLocationBySlug($params['location']);
     }
 }

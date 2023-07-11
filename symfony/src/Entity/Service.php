@@ -4,6 +4,7 @@ namespace App\Entity;
 
 
 use App\Repository\ServiceRepository;
+use App\Symfony\Doctrine\NestedSetEntityTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -19,7 +20,7 @@ use Gedmo\Tree\Traits\NestedSetEntity;
 #[ORM\Entity(repositoryClass: ServiceRepository::class)]
 class Service
 {
-    use NestedSetEntity, TimestampableEntity;
+    use NestedSetEntityTrait, TimestampableEntity;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -33,15 +34,6 @@ class Service
     #[ORM\Column(name: 'name', type: Types::STRING, length: 64)]
     private string $name;
 
-
-    #[Gedmo\TreeParent]
-    #[ORM\ManyToOne(targetEntity: Service::class, inversedBy: 'children')]
-    #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
-    private ?self $parent;
-
-    #[ORM\OneToMany(targetEntity: Service::class, mappedBy: 'parent')]
-    #[ORM\OrderBy(['lft' => 'ASC'])]
-    private $children;
 
     #[ORM\ManyToMany(targetEntity: Profile::class, inversedBy: 'services')]
     private Collection $profile;
@@ -66,6 +58,7 @@ class Service
     {
         return $this->name;
     }
+
     public function getSlug(): ?string
     {
         return $this->slug;
@@ -75,33 +68,6 @@ class Service
     {
         $this->slug = $slug;
 
-        return $this;
-    }
-
-    public function getRoot(): int
-    {
-        return $this->root;
-    }
-
-    public function getParent(): ?self
-    {
-        return $this->parent;
-    }
-
-    public function setParent(self $parent): static
-    {
-        $this->parent = $parent;
-        return $this;
-    }
-
-    public function getChildren()
-    {
-        return $this->children;
-    }
-
-    public function setChildren($children): static
-    {
-        $this->children = $children;
         return $this;
     }
 

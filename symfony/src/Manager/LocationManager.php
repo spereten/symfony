@@ -29,14 +29,30 @@ class LocationManager
         return $this->getRepository()->findOneBy(['slug' => $slug]);
     }
 
-    public function createLocation(LocationCreateDto $dto): void
+    public function createLocation(LocationCreateDto $dto, bool $flush = true): Location
     {
-        $location = new Location();
+
+        $location = $this->saveFromDto($dto);
+        $this->em->persist($location);
+        if($flush){
+            $this->em->flush();
+        }
+
+        return $location;
+    }
+
+    public function saveFromDto(LocationCreateDto $dto, ?Location $location = null ): Location
+    {
+        $location = $location ?? new Location();
         $location->setCity($dto->city);
         $location->setCountry($dto->country);
-
-        $this->em->persist($location);
-        $this->em->flush();
+        if($dto->parent_id !== null){
+            $parent = $this->getRepository()->find($dto->parent_id);
+            if($parent){
+                $location->setParent($parent);
+            }
+        }
+        return $location;
     }
 
 

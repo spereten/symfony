@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Icon fonts -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+  <!-- Google fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/main.css">
+
+  <title>Documentation</title>
+</head>
+
+<body>
+
+
+  <main class="page">
+
+
+    <aside class="sidebar">
+
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          Freeio
+        </div>
+        <div class="sidebar-version">
+          v1.0.0
+        </div>
+      </div>
+
+
+      <ul class="nav-list">
+        <li>
+          <a class="link-active" data-transition href="#intro">Introduction</a>
+        </li>
+
+        <li class="has-children">
+          <a>
+            Getting started
+            <i class="icon" data-feather="chevron-right"></i>
+          </a>
+
+          <ul class="subnav">
+            <li>
+              <a data-transition href="#templateStructure">Template structure</a>
+            </li>
+
+            <li>
+              <a data-transition href="#basicHTMLMarkup">Basic HTML markup</a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="has-children">
+          <a>
+            Helper classes
+            <i class="icon" data-feather="chevron-right"></i>
+          </a>
+
+          <ul class="subnav">
+            <li>
+              <a data-transition href="#layout">Layout</a>
+            </li>
+
+            <li>
+              <a data-transition href="#typography">Typography</a>
+            </li>
+
+            <li>
+              <a data-transition href="#otherHelpers">Others</a>
+            </li>
+          </ul>
+        </li>
+
+        <li>
+          <a data-transition href="#credits">Credits</a>
+        </li>
+      </ul>
+
+    </aside>
+
+
+    <div class="page-content">
+
+
+      <div id="intro" class="content active">
+        <div class="row">
+          <div class="col-12">
+
+            <h1>Freeio</h1>
+
+            <p class="lead">
+              Freelance Marketplace HTML Template
+            </p>
+
+            <p>
+              Hello and welcome to Freeio user guide.
+              Here you’ll find how to use and customize the template.
+
+              If you have any questions or issues you can
+              always contact me through my email <a
+                href="mailto:creativelayers088@gmail.com">creativelayers088@gmail.com</a>
+              or through <a href="https://themeforest.net/user/creativelayers">my ThemeForest profile page</a>.
+              But in fact you can write me for any reason, I will be glad to talk.
+            </p>
+
+
+            <div class="content-block">
+              <h3>Important Notes:</h3>
+
+              <ul class="list">
+                <li>
+                  This is an HTML5 Template and <strong>NOT a WordPress Theme</strong>.
+                </li>
+
+                <li>
+                  Images you may have seen in the live preview are not included to the final item purchase.
+                </li>
+              </ul>
+            </div>
+
+
+            <!-- <div class="content-block">
+        <h3>HTML</h3>
+        <p>This is the folder that concerns you. It contains the main HTML, CSS and JS files. Make the customizations you need and upload this folder files to the server.</p>
+      </div>
+
+
+      <div class="content-block">
+        <h3>Documentation</h3>
+        <p>Information and setup guide for the item. You are reading this file now.</p>
+      </div>
+
+
+      <div class="alert alert-warning">
+        <h4 class="alert-title">No Images are Provided with the Item</h4>
+        Images you may have seen in the live preview are not included to the final item purchase. Grey placeholders are provided instead.
+      </div> -->
+
+
+          </div>
+        </div>
+      </div>
+
+      <div id="templateStructure" class="content">
+        <div class="row">
+          <div class="col-12">
+
+            <h1>Template Structure</h1>
+
+            <p>
+              Full list of plugins and libraries is available in Credits section of the documentation.
+            </p>
+
+            <div class="content-block">
+              <h3>Stylesheets</h3>
+
+              <ul class="list">
+                <li>
+                  <strong>css/ace-responsive-menu.css</strong>
+                  <br>
+                  Desktop Menu styles.
+                </li>
+                <li>
+                  <strong>css/animate.css</strong>
+                  <br>
+                  Animation styles.
+                </li>
+                <li>
+                  <strong>css/bootstrap.min.css</strong>
+                  <br>
+                  Boostrap of libraries styles.
+                </li>
+                <li>
+                  <strong>css/bootstrap-select.min.css</strong>
+                  <br>
+                  Dropdown Select of libraries styles.
+                </li>
+                <li>
+                  <strong>css/dashbord_navitaion.css</strong>
+                  <br>
+                  Dashboard Custome styles.
+                </li>
+                <li>
+                  <strong>css/menu.css</strong>
+                  <br>
+                  Mobile Menu styles.
+                </li>
+                <li>
+                  <strong>css/slider.css</strong>
+                  <br>
+                  Owl & Swiper Sldier Plugins styles.
+                </li>
+                <li>
+                  <strong>css/isotope.css</strong>
+                  <br>
+                  Magnefic Poup & Masonry Isotop styles.
+                </li>
+              </ul>
+
+              <ul class="list">
+                <li>
+                  <strong>css/style.css</strong>
+                  <br>
+                  Contains template styles with table of contents.
+                </li>
+              </ul>
+            </div>
+
+            <div class="content-block">
+              <h3>Scripts</h3>
+
+              <ul class="list">
+                <li>
+                  <strong>js/ace-responsive-menu.js</strong>
+                  <br>
+                  Desktop Menu scripts.
+                </li>
+                <li>
+                  <strong>js/bootstrap.min.js</strong>
+                  <br>
+                  Bootstrap of libraries scripts.
+                </li>
+                <li>
+                  <strong>js/bootstrap-select.min.js</strong>
+                  <br>
+                  Custom Dropdown Select scripts.
+                </li>
+                <li>
+                  <strong>js/chart-custome.js</strong><br>
+                  <strong>js/chart.min.js</strong>
+                  <br>
+                  Both scripts for different Chart.
+                </li>
+                <li>
+                  <strong>js/jquery-3.6.0.js</strong><br>
+                  <strong>js/jquery-migrate-3.0.0.min.js</strong><br>
+                  <strong>js/popper.min.js</strong>
+                  <br>
+                  Jquery of libraries scripts.
+                </li>
+                <li>
+                  <strong>js/jquery.mmenu.all.js</strong>
+                  <br>
+                  Mobile Menu scripts.
+                </li>
+                <li>
+                  <strong>js/jquery.counterup.js</strong>
+                  <br>
+                  Funfacrt/Counter scripts.
+                </li>
+                <li>
+                  <strong>js/infobox.min.js</strong><br>
+                  <strong>js/maps.js</strong><br>
+                  <strong>js/markerclusterer.js</strong>
+                  <br>
+                  For Google Maps With Pupup Window scripts.
+                </li>
+                <li>
+                  <strong>js/owl.js</strong><br>
+                  <strong>js/swiper.js</strong>
+                  <br>
+                  Sliders scripts.
+                </li>
+                <li>
+                  <strong>js/scrollbalance.js</strong>
+                  <br>
+                  Right side Fixed body content scroll.
+                </li>
+                <li>
+                  <strong>js/wow.min.js</strong>
+                  <br>
+                  Animation scripts.
+                </li>
+                <li>
+                  <strong>js/parallax.js</strong>
+                  <br>
+                  Background Parallax scripts.
+                </li>
+                <li>
+                  <strong>js/script.js</strong>
+                  <br>
+                  Bundle of libraries scripts.
+                </li>
+              </ul>
+            </div>
+
+            <div class="content-block">
+              <h3>Images</h3>
+
+              <ul class="list">
+                <li>
+                  <strong>img/</strong>
+                  <br>
+                  Images of the template sections.
+                  There are grey placeholders which you should replace with your own images.
+                </li>
+              </ul>
+            </div>
+
+            <div class="content-block">
+              <h3>Fonts</h3>
+
+              <ul class="list">
+                <li>
+                  <strong>Google Fonts</strong>
+                  <br>
+                  All the fonts are served from Google Fonts server.
+                </li>
+              </ul>
+
+              <ul class="list">
+                <li>
+                  <strong>Font Awesome</strong>
+                  <br>
+                  Font Awesome icons.
+                </li>
+              </ul>
+
+              <ul class="list">
+                <li>
+                  <strong>Flaticon</strong>
+                  <br>
+                  Flaticons.
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+      <div id="basicHTMLMarkup" class="content">
+        <div class="row">
+          <div class="col-12">
+
+            <h1>HTML Structure</h1>
+            <p>The general template markup is the same throughout the files. Please make sure that you have the correct
+              HTML markup first before doing any customizations.</p>
+
+
+            <div class="language-html content-block-code code-wrap">
+              <pre class="language-html">
+          <code>
+            &lt;!DOCTYPE html&gt;
+              &lt;html dir=&quot;ltr&quot; lang=&quot;en&quot;&gt;
+              &lt;head&gt;
+              &lt;meta charset=&quot;utf-8&quot;&gt;
+              &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
+              &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+              &lt;meta name=&quot;keywords&quot; content=&quot;advanced search, agency, agent, classified, directory, house, listing, property, real estate, real estate agency, real estate agent, realestate, realtor, rental&quot;&gt;
+              &lt;meta name=&quot;description&quot; content=&quot;Freeio - Freelance Marketplace HTML Template&quot;&gt;
+              &lt;meta name=&quot;CreativeLayers&quot; content=&quot;ATFN&quot;&gt;
+              &lt;!-- css file --&gt;
+              &lt;link rel=&quot;stylesheet&quot; href=&quot;css/jquery-ui.min.css&quot;&gt;
+              &lt;link rel=&quot;stylesheet&quot; href=&quot;css/ace-responsive-menu.css&quot;&gt;
+              &lt;link rel=&quot;stylesheet&quot; href=&quot;css/menu.css&quot;&gt;
+              &lt;link rel=&quot;stylesheet&quot; href=&quot;css/fontawesome.css&quot;&gt;
+              &lt;link rel=&quot;stylesheet&quot; href=&quot;css/flaticon.css&quot;&gt;
+              &lt;link rel=&quot;stylesheet&quot; href=&quot;css/bootstrap-select.min.css&quot;&gt;
+              &lt;link rel=&quot;stylesheet&quot; href=&quot;css/animate.css&quot;&gt;
+              &lt;link rel=&quot;stylesheet&quot; href=&quot;css/slider.css&quot;&gt;
+              &lt;link rel=&quot;stylesheet&quot; href=&quot;css/style.css&quot;&gt;
+              &lt;link rel=&quot;stylesheet&quot; href=&quot;css/ud-custom-spacing.css&quot;&gt;
+              &lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;&gt;
+              &lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin&gt;
+              &lt;link href=&quot;https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap; rel=&quot;stylesheet&quot;&gt;
+              &lt;!-- Responsive stylesheet --&gt;
+              &lt;link rel=&quot;stylesheet&quot; href=&quot;css/responsive.css&quot;&gt;
+              &lt;!-- Title --&gt;
+              &lt;title&gt;Freeio - Freelance Marketplace HTML Template&lt;/title&gt;
+              &lt;!-- Favicon --&gt;
+              &lt;link href=&quot;images/favicon.ico&quot; sizes=&quot;128x128&quot; rel=&quot;shortcut icon&quot; type=&quot;image/x-icon&quot; /&gt;
+              &lt;link href=&quot;images/favicon.ico&quot; sizes=&quot;128x128&quot; rel=&quot;shortcut icon&quot; /&gt;
+              &lt;!-- Apple Touch Icon --&gt;
+              &lt;link href=&quot;images/apple-touch-icon-60x60.png&quot; sizes=&quot;60x60&quot; rel=&quot;apple-touch-icon&quot;&gt;
+              &lt;link href=&quot;images/apple-touch-icon-72x72.png&quot; sizes=&quot;72x72&quot; rel=&quot;apple-touch-icon&quot;&gt;
+              &lt;link href=&quot;images/apple-touch-icon-114x114.png&quot; sizes=&quot;114x114&quot; rel=&quot;apple-touch-icon&quot;&gt;
+              &lt;link href=&quot;images/apple-touch-icon-180x180.png&quot; sizes=&quot;180x180&quot; rel=&quot;apple-touch-icon&quot;&gt;
+
+
+              &lt;/head&gt;
+              &lt;body&gt;
+              &lt;div class=&quot;wrapper&quot;&gt;
+                &lt;div class=&quot;body_content_wrapper&quot;&gt;
+                  &lt;section&gt;
+                  &lt;/section&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+              &lt;script src=&quot;js/jquery-3.6.0.js&quot;&gt;&lt;/script&gt; 
+              &lt;script src=&quot;js/jquery-migrate-3.0.0.min.js&quot;&gt;&lt;/script&gt; 
+              &lt;script src=&quot;js/popper.min.js&quot;&gt;&lt;/script&gt; 
+              &lt;script src=&quot;js/bootstrap.min.js&quot;&gt;&lt;/script&gt; 
+              &lt;script src=&quot;js/bootstrap-select.min.js&quot;&gt;&lt;/script&gt; 
+              &lt;script src=&quot;js/jquery.mmenu.all.js&quot;&gt;&lt;/script&gt; 
+              &lt;script src=&quot;js/ace-responsive-menu.js&quot;&gt;&lt;/script&gt; 
+              &lt;script src=&quot;js/jquery-scrolltofixed-min.js&quot;&gt;&lt;/script&gt; 
+              &lt;script src=&quot;js/wow.min.js&quot;&gt;&lt;/script&gt; 
+              &lt;script src=&quot;js/owl.js&quot;&gt;&lt;/script&gt; 
+              &lt;script src=&quot;js/parallax.js&quot;&gt;&lt;/script&gt; 
+              &lt;script src=&quot;js/pricing-slider.js&quot;&gt;&lt;/script&gt;
+              &lt;!-- Custom script for all pages --&gt; 
+              &lt;script src=&quot;js/script.js&quot;&gt;&lt;/script&gt;
+              &lt;/body&gt;
+              &lt;/html&gt;
+          </code>
+        </pre>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div id="layout" class="content">
+        <div class="row">
+          <div class="col-12">
+            <h1>Layout</h1>
+
+            <div class="content-block">
+              <h2>Margins and paddings</h2>
+              <p>Control the padding on one side of an element using the <code>p{t|r|b|l}-{size}</code> utilities.</p>
+              <p>All examples also works with paddings.</p>
+
+              <div class="language-css code-wrap content-block-code">
+                <pre class="language-css">
+            <code>
+              .mt20 { margin-top: 20px; }
+              .mt25 { margin-top: 25px; }
+              .mt30 { margin-top: 30px; }
+              .mt35 { margin-top: 35px; }
+              .mt40 { margin-top: 40px; }
+              .mt45 { margin-top: 45px; }
+              .mt50 { margin-top: 50px; }
+              .mt55 { margin-top: 55px; }
+              .mt60 { margin-top: 60px; }
+              .mt65 { margin-top: 65px; }
+              .mt70 { margin-top: 70px; }
+              .mt75 { margin-top: 75px; }
+              .mt80 { margin-top: 80px; }
+            </code>
+          </pre>
+              </div>
+
+
+              <h3>Horizontal and vertical spacing</h3>
+              <p>Control horizontal and vertical spacing of an element using the <code>mx-{size}</code> utilities.</p>
+
+              <div class="language-html code-wrap content-block-code">
+                <pre class="language-html">
+            <code>
+              &lt;div class="mx-10"&gt;&lt;/div&gt;
+              &lt;div class="py-10"&gt;&lt;/div&gt;
+            </code>
+          </pre>
+              </div>
+
+
+              <h3>Responsive</h3>
+              <p>To control the margin of an element at a specific breakpoint, add a <code>{screen}:</code> prefix to
+                any existing margin utility. For example, adding the class <code>mt20-md</code> to an element would
+                apply the <code>mt20</code> utility at medium screen sizes and below.</p>
+
+              <div class="language-html code-wrap content-block-code">
+                <pre class="language-html">
+            <code>
+              &lt;div class="mt-30 mt20-md mt20-sm"&gt;&lt;/div&gt;
+            </code>
+          </pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div id="typography" class="content">
+        <div class="row">
+          <div class="col-12">
+            <h1>Typography</h1>
+
+            <div class="content-block">
+              <h3>Font Size</h3>
+
+              <div class="language-css content-block-code code-wrap">
+                <pre class="language-css">
+            <code>
+              .fz0  { font-size: 0px; }
+              .fz6  { font-size: 6px; }
+              .fz7  { font-size: 7px; }
+              .fz8  { font-size: 8px; }
+              .fz9  { font-size: 9px; }
+              .fz11-fz20 { font-size: 11px; }
+              .fz24 { font-size: 24px; }
+              .fz26 { font-size: 26px; }
+              .fz30 { font-size: 30px; }
+              .fz40 { font-size: 40px; }
+              .fz45 { font-size: 45px; }
+              .fz48 { font-size: 48px; }
+              .fz50 { font-size: 50px; }
+              .fz55 { font-size: 55px; }
+              .fz60 { font-size: 60px; }
+              .fz72 { font-size: 72px; }
+              .fz100 { font-size: 100px; }
+            </code>
+          </pre>
+              </div>
+            </div>
+
+            <div class="content-block">
+              <h3>Font Colors</h3>
+
+              <div class="language-css content-block-code code-wrap">
+                <pre class="language-css">
+            <code>
+              .text-white { ... }
+              .text-gray { ... }
+              .dark-color { ... }
+              .text-thm { ... }
+              .text-thm2 { ... }
+              .text-thm3 { ... }
+              .review-color { ... }
+              .review-color2 { ... }
+            </code>
+          </pre>
+
+
+                <h3>Font Style & Decoration</h3>
+
+                <div class="language-css content-block-code code-wrap">
+                  <pre class="language-css">
+            <code>
+              We Used Bootstrap Default Classes
+            </code>
+          </pre>
+                </div>
+
+
+                <h3>Font Weight</h3>
+
+                <div class="language-css content-block-code code-wrap">
+                  <pre class="language-css">
+            <code>
+              .fw400 { font-weight: 400 !important; }
+              .fw500 { font-weight: 500 !important; }
+              .fw600 { font-weight: 600 !important; }
+              .fw700 { font-weight: 700 !important; }
+            </code>
+          </pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="otherHelpers" class="content">
+        <div class="row">
+          <div class="col-12">
+            <h1>Others</h1>
+            <p>Other classes that are used throughout the template.</p>
+            <div class="content-block">
+              <h3>Background Colors</h3>
+              <div class="language-css content-block-code code-wrap">
+                <pre class="language-css">
+                <code>
+                  .bgc-white { ... }
+                  .bgc-gray { ... }
+                  .bgc-color { ... }
+                  .bgc-thm { ... }
+                  .bgc-thm2 { ... }
+                  .bgc-thm3 { ... }
+                  .bgc-transparent { ... }
+                  .bgc-f7 { ... }
+                  .bgc-71 { ... }
+                  .bgc-thm-light { ... }
+                  .bgc-thm3-light { ... }
+                </code>
+              </pre>
+              </div>
+              <h3>Display</h3>
+              <div class="language-css content-block-code code-wrap">
+                <pre class="language-css">
+                  <code>
+                    bootstrap Display Classes
+                  </code>
+                </pre>
+            </div>
+            <h3>Borders</h3>
+            <div class="language-css content-block-code code-wrap">
+              <pre class="language-css">
+                <code>
+                  .border-none  { border: none; }
+                  .bdr1  { border: 1px solid $border-color; }
+                  .bdrr1  { border-right: 1px solid $border-color; }
+                  .bdrb1  { border-bottom: 1px solid $border-color; }
+                  .bdrl1  { border-left: 1px solid $border-color; }
+                  .bdrt1  { border-top: 1px solid $border-color; }
+                </code>
+              </pre>
+            </div>
+              <h3>Shadows</h3>
+              <div class="language-css content-block-code code-wrap">
+                <pre class="language-css">
+                  <code>
+                    .default-box-shadow1 {
+                      box-shadow: @include default-box-shadow1;
+                    }
+                    .default-box-shadow2 {
+                      box-shadow: @include default-box-shadow2;
+                    }
+                    .default-box-shadow3 {
+                      box-shadow: @include default-box-shadow3;
+                    }
+                    .default-box-shadow4 {
+                      box-shadow: @include default-box-shadow4;
+                    }
+                    .default-box-shadow5 {
+                      box-shadow: @include default-box-shadow5;
+                    }
+                  </code>
+                </pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+          <!-- <div id="sassSource" class="content">
+            <div class="row">
+              <div class="col-12">
+
+                <h1>Sass Source Files</h1>
+                <p>This requires basic technical skills.</p>
+                <p>Freeio comes with sass source files and simple gulp setup for it. To be able to edit sass files and compile them in css follow this steps:</p>
+
+                <p>1. Make sure that you have node.js installed, <a href="https://nodejs.org/en/">node.js</a>.</p>
+                <p>2. Open terminal in the template folder.</p>
+                <p>3. Run <code>npm install</code>.</p>
+                <p>4. Once the installation is ready, run <code>gulp build</code>. This will compile sass into css files and activate local server for better development process. Now you can make changes in scss files.</p>
+
+                <p>After that you can use <code>gulp server</code> command  instead of <code>gulp build6</code> to run the local server for development.</p>
+
+                <p>If you have any questions or concerns, you can submit a support request, we usually respond very quickly :)</p>
+                
+              </div>
+            </div>
+          </div> -->
+          
+          
+          <div id="credits" class="content">
+            <div class="row">
+              <div class="col-12">
+
+                <h1>Credits</h1>
+                <p>The following images, assets, icons, scripts or other files are used in the item as listed bellow:
+                </p>
+
+                <div class="content-block">
+                  <h3>Images</h3>
+
+                  <ul class="list">
+                    <li>
+                      <a target="_blank" href="https://unsplash.com/">
+                        Unsplash
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+
+                <div class="content-block">
+                  <h3>Fonts</h3>
+
+                  <ul class="list">
+                    <li>
+                      <a target="_blank" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap">
+                        DM+Sans
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+
+                <div class="content-block">
+                  <h3>Icons</h3>
+
+                  <ul class="list">
+                    <li>
+                      <a target="_blank" href="https://fontawesome.com/">
+                        Font Awesome
+                      </a>
+                    </li>
+                    <li>
+                      <a target="_blank" href="https://www.flaticon.com/">
+                        flaticon
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="content-block">
+                  <h3>Scripts</h3>
+
+                  <ul class="list tt-n">
+
+                    <li>
+                      <a target="_blank" href="https://wowjs.uk/">
+                        Wow Animation
+                      </a>
+                    </li>
+                    <li>
+                      <a target="_blank" href="https://pixelcog.github.io/parallax.js/">
+                        Parallax
+                      </a>
+                    </li>
+                    <li>
+                      <a target="_blank" href="https://owlcarousel2.github.io/OwlCarousel2/">
+                        Owl
+                      </a>
+                    </li>
+                    <li>
+                      <a target="_blank" href="https://idangero.us/swiper/">
+                        Swiper
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+
+  </main>
+
+
+  <!-- JS plugins -->
+  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+  <script src="assets/main.js"></script>
+
+</body>
+
+</html>

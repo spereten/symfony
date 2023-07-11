@@ -3,17 +3,21 @@
 namespace App\Entity;
 
 use App\Repository\LocationRepository;
+use App\Symfony\Doctrine\NestedSetEntityTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Tree\Traits\NestedSetEntity;
 
 #[ORM\Entity(repositoryClass: LocationRepository::class)]
+#[Gedmo\Tree(type: 'nested')]
+#[ORM\Index(columns: ['parent_id'], name: 'location__parent_id__inx')]
 #[ORM\Index(columns: ['slug'], name: 'location__slug__inx')]
 
 class Location
 {
 
-    use TimestampableEntity;
+    use NestedSetEntityTrait, TimestampableEntity;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -30,6 +34,8 @@ class Location
 
     #[ORM\Column(length: 255)]
     private string $country;
+
+
 
     public function getId(): int
     {

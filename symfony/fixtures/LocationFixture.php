@@ -20,7 +20,9 @@ class LocationFixture extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $this->locationManager->createLocation(new LocationCreateDto('Минск', 'Беларусь'));
+
+        $location = $this->locationManager->createLocation(new LocationCreateDto('Минск', 'Беларусь'));
+        $this->locationManager->createLocation(new LocationCreateDto('Заславль', 'Беларусь', $location->getId() ));
         $this->locationManager->createLocation(new LocationCreateDto('Москва', 'Россия'));
 
     }
